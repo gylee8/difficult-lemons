@@ -21,13 +21,19 @@ module test();
   //stateTr class --> defines objects to store in 2D array of state transitions
 
   //iterate through parseFSM's array to construct the array of transitions
-  //
-  int numStates;
-  byte []
+  int i,j;
+  byte numStates;
+  byte fsmType; //0 = mealy, 1 = moore
+  byte arr [5:0][4:0];
   stateTr [2:0] transitions [];
 
   initial begin
-    numStates = arr[0][0];
+    //pass numStates, initialState, arr into function call
+    if (fsmType == 0) begin //parse transitions for mealy machine
+      for (i=0; i<numStates; i++) begin
+        
+      end
+    end
 
   end
 endmodule
