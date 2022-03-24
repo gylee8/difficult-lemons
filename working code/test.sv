@@ -1,16 +1,16 @@
 class stateTr;
-  int nextState, out;
+  byte nextState, out;
 
   function new();
     nextState = 0;
     out = 0;
   endfunction
 
-  function void setNextState(int s);
+  function void setNextState(byte s);
     this.nextState = s;
   endfunction
 
-  function void setOutput(int o);
+  function void setOutput(byte o);
     this.out = o;
   endfunction
 endclass
@@ -24,14 +24,21 @@ module test();
   int i,j;
   byte numStates;
   byte fsmType; //0 = mealy, 1 = moore
-  byte arr [5:0][4:0];
+  byte arr [5:0][4:0]; //stores raw state transition table
   stateTr [2:0] transitions [];
 
   initial begin
     //pass numStates, initialState, arr into function call
-    if (fsmType == 0) begin //parse transitions for mealy machine
+    transitions = new[numStates]; //set size of dynamic array
+    if (fsmType == 1) begin //parse transitions for moore machine
       for (i=0; i<numStates; i++) begin
-        
+        transitions[i][0] = new(); //corresponding to input=0
+        transitions[i][0].setNextState(arr[i][1]);
+        transitions[i][0].setOutput(arr[i][3]);
+
+        transitions[i][1] = new(); //corresponding to input=1
+        transitions[i][1].setNextState(arr[i][2]);
+        transitions[i][1].setOutput(arr[i][3]);
       end
     end
 
