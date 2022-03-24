@@ -5,30 +5,39 @@
 // Auxiliary function to count the number of lines in the file
 int numLines(FILE *f);
 
-// Convert int representing octal into normal binary
-char octToBin(int i);
-
 // Read information from config.txt
-void readTable(char *table);
+void readTable(char *type, char *states);
+
 
 int main(){
-  printf("010 = %d", octToBin(10000000));
+  // char **table;
+  char *type = (char *) malloc(8);
+  char *states = (char *) malloc(8);
+  readTable(type, states);
+  printf("type: %d, states: %d\n", *type, *states);
 }
 
-void readTable(char *type, char *states, char **table){
+void readTable(char *type, char *states){
   FILE *file;
   file = fopen("config.txt", "r");
 
-  int lines = numLines(file);
+  // int lines = numLines(file);
 
   int num = 0;
-  fscanf(file, "%o", &num);
-  *type = octToBin(num);
-  fscanf(file, "%o", &num);
-  *states = octToBin(num);
+  fscanf(file, "%d", type);   // Value: {0, 1}
+  fscanf(file, "%d", states); // Value: {2, 3, 4}
 
+  fclose(file);
 }
 
-char octToBin(int i){
-  return ((i >> 11) & 1)*4 + ((i >> 7) & 1)*2 + ((i >> 3) & 1);
+int numLines(FILE *f){
+  int count = 0;
+  char c;
+
+  for(c = fgetc(f); c != EOF; c = fgetc(f)){
+    if(c == '\n')
+      count++;
+  }
+  rewind(f);
+  return count;
 }
