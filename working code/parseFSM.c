@@ -6,18 +6,23 @@
 int numLines(FILE *f);
 
 // Read information from config.txt
-void readTable(char *type, char *states);
+void readTable(char *type, char *states, char *table);
 
 
 int main(){
-  // char **table;
-  char *type = (char *) malloc(8);
-  char *states = (char *) malloc(8);
-  readTable(type, states);
+  char *table = (char *) malloc(sizeof(char) * 4);
+  char *type = (char *) malloc(sizeof(char));
+  char *states = (char *) malloc(sizeof(char));
+  readTable(type, states, table);
   printf("type: %d, states: %d\n", *type, *states);
+  int i = 0;
+  // printf("table: ");
+  for(i = 0; i<4; i++){
+    printf("table element %d in %p: %d\n", i, table + i*sizeof(char), *(table + i*sizeof(char)));
+  }
 }
 
-void readTable(char *type, char *states){
+void readTable(char *type, char *states, char *table){
   FILE *file;
   file = fopen("config.txt", "r");
 
@@ -26,6 +31,14 @@ void readTable(char *type, char *states){
   int num = 0;
   fscanf(file, "%d", type);   // Value: {0, 1}
   fscanf(file, "%d", states); // Value: {2, 3, 4}
+
+  char c;
+  int i = 0;
+  while(fscanf(file, "%d", &c) == 1){
+    // printf("read in: %d\n", c);
+    *(table + sizeof(char)*i) = c;
+    i++;
+  }
 
   fclose(file);
 }
