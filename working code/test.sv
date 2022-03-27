@@ -13,6 +13,10 @@ class stateTr;
   function void setOutput(byte o);
     this.out = o;
   endfunction
+
+  function void print();
+    $display("(%0d, %0d)", nextState, out);
+  endfunction
 endclass
 
 class randInputs;
@@ -57,7 +61,7 @@ module test();
   byte swIn, ctrIn, numStates;
   byte fsmType; //0 = mealy, 1 = moore
   byte arr [19:0]; //stores raw state transition table
-  stateTr [2:0] transitions [];
+  stateTr [3:0] transitions [];
   randInput inputArr;
   int inputDelay, ctrDelay;
 
@@ -67,7 +71,8 @@ module test();
   initial begin
     //parse transition table
     readTable(fsmType, numStates, arr);
-    transitions = new[numStates]; //set size of dynamic array
+    foreach(transitions[i]) //set size of each dynamic array
+      transitions[i] = new[numStates];
     if (fsmType == 0) begin //parse transitions for mealy machine
       $display("parsing transitions for Mealy machine");
       for (i=0; i<numStates; i++) begin
@@ -78,19 +83,35 @@ module test();
         transitions[i][1] = new(); //corresponding to input=1
         transitions[i][1].setNextState(arr[5*i+3]);
         transitions[i][1].setOutput(arr[5*i+4]);
-        $display("transitions[%0d]: %p", i, transitions[i]);
+
+        transitions[i][2] = new();
+        transitions[i][2].setNextState(arr[5*i+5]);
+        transitions[i][2].setOutput(arr[5*i+6]);
+
+        transitions[i][3] = new();
+        transitions[i][3].setNextState(arr[5*i+7]);
+        transitions[i][3].setOutput(arr[5*i+8]);
+        $display("transitions[%0d]: %p, %p, %p, %p", i, transitions[i][0], transitions[i][1], transitions[i][2], transitions[i]3);
       end
     end else if (fsmType == 1) begin //parse transitions for moore machine
       $display("parsing transitions for Moore machine");
       for (i=0; i<numStates; i++) begin
         transitions[i][0] = new(); //corresponding to input=0
         transitions[i][0].setNextState(arr[4*i+1]);
-        transitions[i][0].setOutput(arr[4*i+3]);
+        transitions[i][0].setOutput(arr[4*i+5]);
 
         transitions[i][1] = new(); //corresponding to input=1
         transitions[i][1].setNextState(arr[i][4*i+2]);
-        transitions[i][1].setOutput(arr[i][4*i+3]);
-        $display("transitions[%0d]: %p", i, transitions[i]);
+        transitions[i][1].setOutput(arr[i][4*i+5]);
+
+        transitions[i][2] = new();
+        transitions[i][2].setNextState(arr[i][4*i+3]);
+        transitions[i][2].setOutput(arr[i][4*i+5]);
+
+        transitions[i][3] = new();
+        transitions[i][3].setNextState(arr[i][4*i+4]);
+        transitions[i][3].setOutput(arr[i][4*i+5]);
+        $display("transitions[%0d]: %p, %p, %p, %p", i, transitions[i][0], transitions[i][1], transitions[i][2], transitions[i][3]);
       end
     end
 
@@ -98,7 +119,7 @@ module test();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
     $display();
     $display("randomized sw and ctr inputs");
-    
+
     foreach(inputArr.arr[i]) begin
       std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
       #(inputDelay * 1s);
@@ -112,7 +133,4 @@ module test();
 
   end
 
-  initial begin
-
-  end
 endmodule
