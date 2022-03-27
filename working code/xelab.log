@@ -1,0 +1,15 @@
+Vivado Simulator 2019.2
+Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2019.2/bin/unwrapped/win64.o/xelab.exe work.test -sv_lib dpi -R 
+Multi-threading is on. Using 6 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3597] non-void function 'randomize' called as a task without void casting [C:/Users/Gillian/Documents/GitHub/difficult-lemons/working code/test.sv:124]
+WARNING: [VRFC 10-3597] non-void function 'randomize' called as a task without void casting [C:/Users/Gillian/Documents/GitHub/difficult-lemons/working code/test.sv:128]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package work.$unit_test_sv
+Compiling package std.std
+Compiling module work.test

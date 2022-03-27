@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sun Mar 27 16:54:22 2022
+# Process ID: 3600
+# Current directory: C:/Users/Gillian/Documents/GitHub/difficult-lemons/working code
+# Command line: xsim.exe -mode tcl -source {xsim.dir/work.test/xsim_script.tcl}
+# Log file: C:/Users/Gillian/Documents/GitHub/difficult-lemons/working code/xsim.log
+# Journal file: C:/Users/Gillian/Documents/GitHub/difficult-lemons/working code\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/work.test/xsim_script.tcl
+run -all

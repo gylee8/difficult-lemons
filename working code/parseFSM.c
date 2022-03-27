@@ -8,7 +8,7 @@ int numLines(FILE *f);
 // Read information from config.txt
 void readTable(char *type, char *states, char *table);
 
-
+/*
 int main(){
   char *table = (char *) malloc(sizeof(char) * 4);
   char *type = (char *) malloc(sizeof(char));
@@ -20,9 +20,10 @@ int main(){
   for(i = 0; i<4; i++){
     printf("table element %d in %p: %d\n", i, table + i*sizeof(char), *(table + i*sizeof(char)));
   }
-}
+}*/
 
 void readTable(char *type, char *states, char *table){
+  printf("inside readTable()");
   FILE *file;
   file = fopen("config.txt", "r");
 
