@@ -10,7 +10,7 @@ module moore2(
   reg next, out_int;
 
   initial begin
-    #5
+    #5    // need this delay for state initialization to happen correctly
     //$display("initial begin: state <= state_in");
     state = state_in;
   end
