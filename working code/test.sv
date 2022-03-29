@@ -33,6 +33,14 @@ class randInputs;
   endfunction
 endclass
 
+class randDelays;
+  rand int swDelay;
+  rand int ctrDelay;
+
+  constraint c_sw{swDelay inside {[5:10]};}
+  constraint c_ctr{ctrDelay > swDelay; ctrDelay <= 10;}
+endclass
+
 `define SV_RAND_CHECK(r) \
 do begin \
   if (!(r)) begin \
@@ -53,7 +61,9 @@ module test();
   byte arr [19:0]; //stores raw state transition table
   stateTr transitions [][];
   randInputs inputArr;
-  int inputDelay, ctrDelay;
+  //int inputDelay, ctrDelay;
+  randDelays delays;
+
 
   logic clk, reset;
   logic [1:0] swIn;
@@ -76,6 +86,7 @@ module test();
     //$display("initial begin");
     //parse transition table
     readTable(fsmType, numStates, arr);
+    delays = new();
     // $display("-----Inside test.sv-----");
     // $display("finished readTable");
     // $display("fsmType: %0d", fsmType);
@@ -169,16 +180,17 @@ module test();
     $display("state: %0d", curState);
 
     foreach(inputArr.SWInputArr[i]) begin
+      `SV_RAND_CHECK(delays.randomize());
       $display();
-      std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
-      $display("#%0d", inputDelay);
-      #(inputDelay * 1s);
+      //std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
+      $display("#%0d", delays.swDelay);
+      #(delays.swDelay * 1s);
       swIn = inputArr.SWInputArr[i];
       $display("SW: %0d", swIn);
 
-      std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
-      $display("#%0d", ctrDelay);
-      #(ctrDelay * 1s);
+      //std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
+      $display("#%0d", delays.ctrDelay);
+      #(delays.ctrDelay * 1s);
       ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
       $display("CTR: %0d", ctrIn);
 
