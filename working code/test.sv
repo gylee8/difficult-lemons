@@ -42,18 +42,23 @@ module test();
   //parseFSM should return an object because otherwise, the number of states can't be obtained since there's no way to define the array on the lefthand side of the equals sign
   //stateTr class --> defines objects to store in 2D array of state transitions
 
-  //iterate through parseFSM's array to construct the array of transitions
-  logic clk;
   int i,j;
-  byte swIn, ctrIn, numStates;
+  byte numStates, curState, curOut;
   byte fsmType; //0 = mealy, 1 = moore
   byte arr [19:0]; //stores raw state transition table
   stateTr transitions [][];
   randInputs inputArr;
   int inputDelay, ctrDelay;
 
+  logic clk, reset;
+  logic swIn, ctrIn;
+  reg startState; //need to specify size depending on total number of states in FSM being tested
+  wire DUTcurState, DUTout; //need to specify size
+
   import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[20]);
-  //pass input byte into DUT FSM
+
+  //declare DUT
+  moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
     //$display("initial begin");
@@ -138,20 +143,59 @@ module test();
       end
     end
 
+    startState = $urandom_range(numStates-1); //generate random starting state
+    curState = startState;
+
     inputArr = new();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
     $display();
     $display("randomized sw and ctr inputs");
+    $display("----------------------------");
+    $display("Starting");
+    $display("state: %0d", curState);
 
     foreach(inputArr.SWInputArr[i]) begin
+      $display();
       std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
       #(inputDelay * 1ns);
       swIn = inputArr.SWInputArr[i];
+      $display("SW: %0d", swIn);
 
       std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
       #(ctrDelay * 1ns);
-      ctrIn = inputArr.CtrInputArr[i];
+      ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
+      $display("CTR: %0d", ctrIn);
+
+      //change state and generate output if ctr is enabled (ctrIn HIGH)
+      if (ctrIn == 1) begin
+        if (fsmType == 0) begin //moore machine
+          curState = transitions[curState][swIn].nextState;
+          curOut = transitions[curState][0].out;
+        end else if (fsmType == 1) begin //mealy machine
+          curOut = transitions[curState][swIn].out;
+          curState = transitions[curState][swIn].nextState;
+        end
+      end
+
+      if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
+        $display("  ###############  ");
+        if (curState != DUTcurState) begin
+          if (DUTcurState > numStates-1) begin
+            $display("ERROR--incorrect number of states");
+            $display(" max state: %0d", numStates-1);
+            $display(" DUT state: %0d", DUTcurState);
+          end else begin
+            $display("ERROR--incorrect next state");
+            $display(" expected : %0d", curState);
+            $display(" DUT state: %0d", DUTcurState);
+          end
+        end
+        if (curOut != DUTout) begin
+          $display("ERROR--incorrect output");
+          $display(" expected  : %0d", curOut);
+          $display(" DUT output: %0d", DUTout);
+        end
+      end
     end
   end
-
 endmodule
