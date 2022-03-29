@@ -105,7 +105,7 @@ module test();
         $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
     end else if (fsmType == 0) begin //parse transitions for moore machine
-      //$display("parsing transitions for Moore machine");
+      $display("parsing transitions for Moore machine");
       for (i=0; i<numStates; i++) begin
         //$display("~~ i = %0d ~~", i);
         transitions[i][0] = new(); //corresponding to input=0
@@ -142,6 +142,7 @@ module test();
         $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
     end
+    $display();
 
     startState = $urandom_range(numStates-1); //generate random starting state
     curState = startState;
@@ -149,7 +150,7 @@ module test();
     inputArr = new();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
     $display();
-    $display("randomized sw and ctr inputs");
+    $display("randomized sw and ctr inputs\n");
     $display("----------------------------");
     $display("Starting");
     $display("state: %0d", curState);
