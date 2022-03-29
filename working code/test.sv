@@ -26,6 +26,11 @@ class randInputs;
     SWInputArr = new[5];
     CtrInputArr = new[5];
   endfunction
+
+  function void print();
+    $display("SWInputArr:  %p", SWInputArr);
+    $display("CtrInputArr: %p", CtrInputArr);
+  endfunction
 endclass
 
 `define SV_RAND_CHECK(r) \
@@ -51,7 +56,8 @@ module test();
   int inputDelay, ctrDelay;
 
   logic clk, reset;
-  logic swIn, ctrIn;
+  logic [1:0] swIn;
+  logic ctrIn;
   reg startState; //need to specify size depending on total number of states in FSM being tested
   wire DUTcurState, DUTout; //need to specify size
 
@@ -59,6 +65,12 @@ module test();
 
   //declare DUT
   moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+
+  initial begin
+    reset = 0;
+    clk = 0;
+    forever #1s clk=~clk;
+  end
 
   initial begin
     //$display("initial begin");
@@ -149,8 +161,9 @@ module test();
 
     inputArr = new();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
+    $display("randomized sw and ctr inputs");
+    inputArr.print();
     $display();
-    $display("randomized sw and ctr inputs\n");
     $display("----------------------------");
     $display("Starting");
     $display("state: %0d", curState);
@@ -178,6 +191,9 @@ module test();
         end
       end
 
+      $display("expected state = %0d, output = %0d", curState, curOut);
+      $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
+
       if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
         $display("  ###############  ");
         if (curState != DUTcurState) begin
@@ -198,5 +214,6 @@ module test();
         end
       end
     end
+    $finish;
   end
 endmodule
