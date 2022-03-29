@@ -14,7 +14,7 @@ module moore2(
   initial begin
     state <= state_in;
   end
-  
+
   always @(posedge clk or ctrl_in) begin
     if(reset) begin
       state <= 0;
@@ -32,21 +32,23 @@ module moore2(
       s1: begin
         if(sw_in > 0) begin
           next = 1;
+          out_int = 1;
         end
         else begin
           next = 0;
+          out_int = 0;
         end
-        out_int = 1;
       end
 
       s2: begin
         if(sw_in == 0 || sw_in == 2) begin
           next = 1;
+          out_int = 1;
         end
         else begin
           next = 0;
+          out_int = 0;
         end
-        out_int = 0;
       end
     endcase
   end
