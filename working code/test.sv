@@ -198,43 +198,45 @@ module test();
       #(delays.ctrDelay * 1s);
       ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
       $display("CTR: %0d", ctrIn);
-
-      //change state and generate output if ctr is enabled (ctrIn HIGH)
-      if (ctrIn == 1) begin
-        if (fsmType == 0) begin //moore machine
-          transitions[curState][swIn].print();
-          curState = transitions[curState][swIn].nextState;
-          transitions[curState][0].print();
-          curOut = transitions[curState][0].out;
-        end else if (fsmType == 1) begin //mealy machine
-          curOut = transitions[curState][swIn].out;
-          curState = transitions[curState][swIn].nextState;
-        end
-      end
-
-      $display("expected state = %0d, output = %0d", curState, curOut);
-      $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
-
-      if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
-        $display("  ###############  ");
-        if (curState != DUTcurState) begin
-          if (DUTcurState > numStates-1) begin
-            $display("ERROR--incorrect number of states");
-            $display(" max state: %0d", numStates-1);
-            $display(" DUT state: %0d", DUTcurState);
-          end else begin
-            $display("ERROR--incorrect next state");
-            $display(" expected : %0d", curState);
-            $display(" DUT state: %0d", DUTcurState);
-          end
-        end
-        if (curOut != DUTout) begin
-          $display("ERROR--incorrect output");
-          $display(" expected  : %0d", curOut);
-          $display(" DUT output: %0d", DUTout);
-        end
-      end
     end
     $finish;
+  end
+
+  always @(posedge clk) begin
+    //change state and generate output if ctr is enabled (ctrIn HIGH)
+    if (ctrIn == 1) begin
+      if (fsmType == 0) begin //moore machine
+        transitions[curState][swIn].print();
+        curState = transitions[curState][swIn].nextState;
+        transitions[curState][0].print();
+        curOut = transitions[curState][0].out;
+      end else if (fsmType == 1) begin //mealy machine
+        curOut = transitions[curState][swIn].out;
+        curState = transitions[curState][swIn].nextState;
+      end
+    end
+
+    $display("expected state = %0d, output = %0d", curState, curOut);
+    $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
+
+    if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
+      $display("  ###############  ");
+      if (curState != DUTcurState) begin
+        if (DUTcurState > numStates-1) begin
+          $display("ERROR--incorrect number of states");
+          $display(" max state: %0d", numStates-1);
+          $display(" DUT state: %0d", DUTcurState);
+        end else begin
+          $display("ERROR--incorrect next state");
+          $display(" expected : %0d", curState);
+          $display(" DUT state: %0d", DUTcurState);
+        end
+      end
+      if (curOut != DUTout) begin
+        $display("ERROR--incorrect output");
+        $display(" expected  : %0d", curOut);
+        $display(" DUT output: %0d", DUTout);
+      end
+    end
   end
 endmodule
