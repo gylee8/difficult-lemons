@@ -15,7 +15,7 @@ class randInputs;
   rand byte SWInputArr[];
   rand byte CtrInputArr[];
 
-  constraint c_sizeSW{SWInputArr.size() inside {[5:10]};}
+  constraint c_sizeSW{SWInputArr.size() inside {[10:20]};}
   constraint c_dataSW{foreach(SWInputArr[i])
                         SWInputArr[i] inside {[0:3]};}
   constraint c_sizeCtr{CtrInputArr.size() == SWInputArr.size();}
@@ -171,12 +171,14 @@ module test();
     foreach(inputArr.SWInputArr[i]) begin
       $display();
       std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
-      #(inputDelay * 1ns);
+      $display("#%0d", inputDelay);
+      #(inputDelay * 1s);
       swIn = inputArr.SWInputArr[i];
       $display("SW: %0d", swIn);
 
       std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
-      #(ctrDelay * 1ns);
+      $display("#%0d", ctrDelay);
+      #(ctrDelay * 1s);
       ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
       $display("CTR: %0d", ctrIn);
 
