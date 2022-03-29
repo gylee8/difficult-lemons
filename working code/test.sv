@@ -56,7 +56,8 @@ module test();
   //stateTr class --> defines objects to store in 2D array of state transitions
 
   int i,j;
-  byte numStates, curState, curOut;
+  byte numStates, curState;
+  logic curOut;
   byte fsmType; //0 = mealy, 1 = moore
   byte arr [19:0]; //stores raw state transition table
   stateTr transitions [][];
@@ -71,7 +72,7 @@ module test();
   reg startState; //need to specify size depending on total number of states in FSM being tested
   wire DUTcurState, DUTout; //need to specify size
 
-  import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[20]);
+//  import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[20]);
 
   //declare DUT
   moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
@@ -85,7 +86,11 @@ module test();
   initial begin
     //$display("initial begin");
     //parse transition table
-    readTable(fsmType, numStates, arr);
+//    readTable(fsmType, numStates, arr);
+    fsmType = 0;
+    numStates = 2;
+//    arr = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
+    arr = {0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0};
     delays = new();
     // $display("-----Inside test.sv-----");
     // $display("finished readTable");
@@ -197,7 +202,9 @@ module test();
       //change state and generate output if ctr is enabled (ctrIn HIGH)
       if (ctrIn == 1) begin
         if (fsmType == 0) begin //moore machine
+          transitions[curState][swIn].print();
           curState = transitions[curState][swIn].nextState;
+          transitions[curState][0].print();
           curOut = transitions[curState][0].out;
         end else if (fsmType == 1) begin //mealy machine
           curOut = transitions[curState][swIn].out;
