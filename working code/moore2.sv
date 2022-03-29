@@ -2,6 +2,7 @@ module moore2(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
+  input wire state_in,
   output reg state, out
   );
 
@@ -10,6 +11,10 @@ module moore2(
   parameter s1 = 1'b0;
   parameter s2 = 1'b1;
 
+  initial begin
+    state <= state_in;
+  end
+  
   always @(posedge clk or ctrl_in) begin
     if(reset) begin
       state <= 0;
