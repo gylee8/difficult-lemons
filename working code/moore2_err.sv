@@ -11,12 +11,13 @@ module moore2(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
-  input wire state_in,
-  output reg state,
+  input wire [2:0] state_in,
+  output reg [2:0] state,
   output reg out
   );
 
-  reg next, out_int;
+  reg [2:0] next;
+  reg out_int;
 
   initial begin
     #5
