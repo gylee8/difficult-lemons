@@ -1,22 +1,33 @@
+// 2-state Moore machine
+// Config:
+// 0
+// 2
+// 0 0 1 1 1 1
+// 1 1 0 1 0 0
+
+// ERROR: wrong (flipped) output
+
 module moore2(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
   input wire state_in,
-  output reg state, out
+  output reg state,
+  output reg out
   );
 
   reg next, out_int;
 
-  parameter s1 = 1'b0;
-  parameter s2 = 1'b1;
-
   initial begin
+    #5
+    $display("initial begin: state <= state_in");
     state <= state_in;
   end
 
-  always @(posedge clk or ctrl_in) begin
+  always @(posedge clk) begin
+    // $display("posedge clk");
     if(reset) begin
+      // $display("reset");
       state <= 0;
     end
     else if (ctrl_in) begin
@@ -27,27 +38,26 @@ module moore2(
 
   always @(sw_in, state) begin
     next = state;
-    out_int = 0;
     case(state)
-      s1: begin
+      0: begin
         if(sw_in > 0) begin
           next = 1;
-          out_int = 1;
+          out_int = 0;
         end
         else begin
           next = 0;
-          out_int = 0;
+          out_int = 1;
         end
       end
 
-      s2: begin
+      1: begin
         if(sw_in == 0 || sw_in == 2) begin
           next = 1;
-          out_int = 1;
+          out_int = 0;
         end
         else begin
           next = 0;
-          out_int = 0;
+          out_int = 1;
         end
       end
     endcase
