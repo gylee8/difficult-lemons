@@ -63,7 +63,7 @@ module test();
   byte numStates, curState;
   logic curOut;
   byte fsmType; //0 = mealy, 1 = moore
-  byte arr [19:0]; //stores raw state transition table
+  byte arr [44:0]; //stores raw state transition table
   stateTr transitions [][];
   randInputs inputArr;
   //int inputDelay, ctrDelay;
@@ -73,10 +73,10 @@ module test();
   logic clk, reset;
   logic [1:0] swIn;
   logic ctrIn;
-  reg startState; //need to specify size depending on total number of states in FSM being tested
-  wire DUTcurState, DUTout; //need to specify size
+  reg [2:0] startState; //3-bits to account for possible 5-state
+  wire [2:0] DUTcurState, DUTout; //3-bits to account for possible 5-state
 
-//  import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[20]);
+  import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[45]);
 
   //declare DUT
   moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
@@ -95,11 +95,11 @@ module test();
   initial begin
     //$display("initial begin");
     //parse transition table
-//    readTable(fsmType, numStates, arr);
+    readTable(fsmType, numStates, arr);
     fsmType = 0;
     numStates = 2;
 //    arr = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
-    arr = {0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0};
+    //arr = {0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0};
     delays = new();
     // $display("-----Inside test.sv-----");
     // $display("finished readTable");
@@ -121,23 +121,23 @@ module test();
       $display("parsing transitions for Mealy machine");
       for (i=0; i<numStates; i++) begin
         transitions[i][0] = new(); //corresponding to input=0
-        transitions[i][0].nextState = (arr[19-(9*i+1)]);
-        transitions[i][0].out = (arr[19-(9*i+2)]);
+        transitions[i][0].nextState = (arr[$size(arr)-1-(9*i+1)]);
+        transitions[i][0].out = (arr[$size(arr)-1-(9*i+2)]);
         $display("(%0d,%0d)", transitions[i][0].nextState, transitions[i][0].out);
 
         transitions[i][1] = new(); //corresponding to input=1
-        transitions[i][1].nextState = (arr[19-(9*i+3)]);
-        transitions[i][1].out = (arr[19-(9*i+4)]);
+        transitions[i][1].nextState = (arr[$size(arr)-1-(9*i+3)]);
+        transitions[i][1].out = (arr[$size(arr)-1-(9*i+4)]);
         $display("(%0d,%0d)", transitions[i][1].nextState, transitions[i][1].out);
 
         transitions[i][2] = new();
-        transitions[i][2].nextState = (arr[19-(9*i+5)]);
-        transitions[i][2].out = (arr[19-(9*i+6)]);
+        transitions[i][2].nextState = (arr[$size(arr)-1-(9*i+5)]);
+        transitions[i][2].out = (arr[$size(arr)-1-(9*i+6)]);
         $display("(%0d,%0d)", transitions[i][2].nextState, transitions[i][2].out);
 
         transitions[i][3] = new();
-        transitions[i][3].nextState = (arr[19-(9*i+7)]);
-        transitions[i][3].out = (arr[19-(9*i+8)]);
+        transitions[i][3].nextState = (arr[$size(arr)-1-(9*i+7)]);
+        transitions[i][3].out = (arr[$size(arr)-1-(9*i+8)]);
         $display("(%0d,%0d)", transitions[i][3].nextState, transitions[i][3].out);
         $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
@@ -146,35 +146,35 @@ module test();
       for (i=0; i<numStates; i++) begin
         //$display("~~ i = %0d ~~", i);
         transitions[i][0] = new(); //corresponding to input=0
-        //$display("-- %0d --", (19-(6*i+1)));
-        transitions[i][0].nextState = (arr[19-(6*i+1)]);
-        //$display("-- %0d --", (19-(6*i+5)));
-        transitions[i][0].out = (arr[19-(6*i+5)]);
-        //$display("expect (%0d,%0d)",(arr[19-(6*i+1)]),(arr[19-(6*i+5)]));
+        //$display("-- %0d --", ($size(arr)-1-(6*i+1)));
+        transitions[i][0].nextState = (arr[$size(arr)-1-(6*i+1)]);
+        //$display("-- %0d --", ($size(arr)-1-(6*i+5)));
+        transitions[i][0].out = (arr[$size(arr)-1-(6*i+5)]);
+        //$display("expect (%0d,%0d)",(arr[$size(arr)-1-(6*i+1)]),(arr[$size(arr)-1-(6*i+5)]));
         //$display("actual (%0d,%0d)", transitions[i][0].nextState, transitions[i][0].out);
 
         transitions[i][1] = new(); //corresponding to input=1
-        //$display("-- %0d --", (19-(6*i+2)));
-        transitions[i][1].nextState = (arr[19-(6*i+2)]);
-        //$display("-- %0d --", (19-(6*i+5)));
-        transitions[i][1].out = (arr[19-(6*i+5)]);
-        //$display("expect (%0d,%0d)",(arr[19-(6*i+2)]),(arr[19-(6*i+5)]));
+        //$display("-- %0d --", ($size(arr)-1-(6*i+2)));
+        transitions[i][1].nextState = (arr[$size(arr)-1-(6*i+2)]);
+        //$display("-- %0d --", ($size(arr)-1-(6*i+5)));
+        transitions[i][1].out = (arr[$size(arr)-1-(6*i+5)]);
+        //$display("expect (%0d,%0d)",(arr[$size(arr)-1-(6*i+2)]),(arr[$size(arr)-1-(6*i+5)]));
         //$display("actual (%0d,%0d)", transitions[i][1].nextState, transitions[i][1].out);
 
         transitions[i][2] = new();
-        //$display("-- %0d --", (19-(6*i+3)));
-        transitions[i][2].nextState = (arr[19-(6*i+3)]);
-        //$display("-- %0d --", (19-(6*i+5)));
-        transitions[i][2].out = (arr[19-(6*i+5)]);
-        //$display("expect (%0d,%0d)",(arr[19-(6*i+3)]),(arr[19-(6*i+5)]));
+        //$display("-- %0d --", ($size(arr)-1-(6*i+3)));
+        transitions[i][2].nextState = (arr[$size(arr)-1-(6*i+3)]);
+        //$display("-- %0d --", ($size(arr)-1-(6*i+5)));
+        transitions[i][2].out = (arr[$size(arr)-1-(6*i+5)]);
+        //$display("expect (%0d,%0d)",(arr[$size(arr)-1-(6*i+3)]),(arr[$size(arr)-1-(6*i+5)]));
         //$display("actual (%0d,%0d)", transitions[i][2].nextState, transitions[i][2].out);
 
         transitions[i][3] = new();
-        //$display("-- %0d --", (19-(6*i+4)));
-        transitions[i][3].nextState = (arr[19-(6*i+4)]);
-        //$display("-- %0d --", (19-(6*i+5)));
-        transitions[i][3].out = (arr[19-(6*i+5)]);
-        //$display("expect (%0d,%0d)",(arr[19-(6*i+4)]),(arr[19-(6*i+5)]));
+        //$display("-- %0d --", ($size(arr)-1-(6*i+4)));
+        transitions[i][3].nextState = (arr[$size(arr)-1-(6*i+4)]);
+        //$display("-- %0d --", ($size(arr)-1-(6*i+5)));
+        transitions[i][3].out = (arr[$size(arr)-1-(6*i+5)]);
+        //$display("expect (%0d,%0d)",(arr[$size(arr)-1-(6*i+4)]),(arr[$size(arr)-1-(6*i+5)]));
         //$display("actual (%0d,%0d)", transitions[i][3].nextState, transitions[i][3].out);
         $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
