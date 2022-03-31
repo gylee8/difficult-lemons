@@ -77,7 +77,7 @@ module test();
   wire [2:0] DUTcurState; //3-bits to account for possible 5-state
   wire DUTout;
 
-  //import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[45]);
+  import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[45]);
 
   //declare DUT
   moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
