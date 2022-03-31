@@ -69,6 +69,8 @@ module test();
   //int inputDelay, ctrDelay;
   randDelays delays;
 
+  // byte num;
+
 
   logic clk, reset;
   logic [1:0] swIn;
@@ -98,6 +100,7 @@ module test();
     //$display("initial begin");
     //parse transition table
     readTable(fsmType, numStates, arr);
+    #10
     //fsmType = 0;
     //numStates = 2;
 //    arr = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};

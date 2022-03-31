@@ -29,9 +29,25 @@ void readTable(char *type, char *states, char *table){
 
   // int lines = numLines(file);
 
-  int num = 0;
-  fscanf(file, "%d", type);   // Value: {0, 1}
+  char str[10];
+  int temp;
+  // if(fgets(str, 10, file) != NULL){
+  //   printf("no error with fgets\n");
+  //   printf("'%s'", str);
+  // }
+  // if(sscanf(str, "%d", &temp) == 1){
+  //   printf("no error with sscanf\n");
+  //   printf("temp = %d\n", temp);
+  // }
+  fscanf(file, "%d", &temp) == 1;
+  // if(fscanf(file, "%d", &temp) == 1){
+  //   printf("no error with fscanf\n");
+  // }
+  // printf("temp = %d\n", temp);
   fscanf(file, "%d", states); // Value: {2, 3, 4}
+  // printf("temp = %d\n", temp);
+  *type = temp;
+  // printf("type = %d\n", *type);
   printf("\ninside parseFSM: type = %d, # states = %d\n", *type, *states);
 
   char c;
