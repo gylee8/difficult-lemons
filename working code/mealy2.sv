@@ -17,17 +17,18 @@ module mealy2(
   reg [2:0] next;
   reg out_int;
 
-  initial begin
-    #5    // need this delay for state initialization to happen correctly
-    //$display("initial begin: state <= state_in");
-    state = state_in;
-  end
+  // initial begin
+  //   #5    // need this delay for state initialization to happen correctly
+  //   //$display("initial begin: state <= state_in");
+  //   state = state_in;
+  //   $display("mealy2.sv: state = %0d", state);
+  // end
 
   always @(posedge clk) begin
     // $display("posedge clk");
     if(reset) begin
       // $display("reset");
-      state <= 0;
+      state <= state_in;
     end
     else if (ctrl_in) begin
       state <= next;

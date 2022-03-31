@@ -82,11 +82,10 @@ module test();
   import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[45]);
 
   //declare DUT
-  //moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  mealy2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // mealy2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
-    reset = 0;
     clk = 0;
     totalErrCount = 0;
     numTransitions = 0;
@@ -97,10 +96,11 @@ module test();
   end
 
   initial begin
+    reset = 0;
     //$display("initial begin");
     //parse transition table
     readTable(fsmType, numStates, arr);
-    #10
+    // #10
     //fsmType = 0;
     //numStates = 2;
 //    arr = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
@@ -187,7 +187,11 @@ module test();
     $display();
 
     startState = $urandom_range(numStates-1); //generate random starting state
+    $display("startState: %0d", startState);
     curState = startState;
+
+    reset = 1;
+    #2s reset = 0;
 
     inputArr = new();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
@@ -199,70 +203,78 @@ module test();
     $display("state: %0d", curState);
 
 
-    $finish;
+    //$finish;
 
-  //   foreach(inputArr.SWInputArr[i]) begin
-  //     `SV_RAND_CHECK(delays.randomize());
-  //     $display();
-  //     //std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
-  //     $display("#%0d", delays.swDelay);
-  //     #(delays.swDelay * 1s);
-  //     swIn = inputArr.SWInputArr[i];
-  //     $display("SW: %0d", swIn);
-  //
-  //     //std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
-  //     $display("#%0d", delays.ctrDelay);
-  //     #(delays.ctrDelay * 1s);
-  //     ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
-  //     $display("CTR: %0d", ctrIn);
-  //   end
-  //   $display();
-  //   $display("----------------------------");
-  //   $display("Total Errors: %0d", numStErrCount+nextErrCount+outErrCount);
-  //   $display("# times incorrect number of states was detected: %0d", numStErrCount);
-  //   $display("# times next state was incorrect: %0d", nextErrCount);
-  //   $display("# times output was incorrect: %0d", outErrCount);
-  //   $finish;
-  // end
-  //
-  // always @(posedge clk) begin
-  //   //change state and generate output if ctr is enabled (ctrIn HIGH)
-  //   if (ctrIn == 1) begin
-  //     if (fsmType == 0) begin //moore machine
-  //       transitions[curState][swIn].print();
-  //       curState = transitions[curState][swIn].nextState;
-  //       transitions[curState][0].print();
-  //       curOut = transitions[curState][0].out;
-  //     end else if (fsmType == 1) begin //mealy machine
-  //       curOut = transitions[curState][swIn].out;
-  //       curState = transitions[curState][swIn].nextState;
-  //     end
-  //   end
-  //
-  //   #10ns;
-  //   $display("expected state = %0d, output = %0d", curState, curOut);
-  //   $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
-  //   if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
-  //     $display("  ###############  ");
-  //     if (curState != DUTcurState) begin
-  //       if (DUTcurState > numStates-1) begin
-  //         numStErrCount++;
-  //         $display("ERROR--incorrect number of states");
-  //         $display(" max state: %0d", numStates-1);
-  //         $display(" DUT state: %0d", DUTcurState);
-  //       end else begin
-  //         nextErrCount++;
-  //         $display("ERROR--incorrect next state");
-  //         $display(" expected : %0d", curState);
-  //         $display(" DUT state: %0d", DUTcurState);
-  //       end
-  //     end
-  //     if (curOut != DUTout) begin
-  //       outErrCount++;
-  //       $display("ERROR--incorrect output");
-  //       $display(" expected  : %0d", curOut);
-  //       $display(" DUT output: %0d", DUTout);
-  //     end
-  //   end
+    foreach(inputArr.SWInputArr[i]) begin
+      `SV_RAND_CHECK(delays.randomize());
+      $display();
+      //std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
+      $display("#%0d", delays.swDelay);
+      #(delays.swDelay * 1s);
+      swIn = inputArr.SWInputArr[i];
+      $display("SW: %0d", swIn);
+
+      //std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
+      $display("#%0d", delays.ctrDelay);
+      #(delays.ctrDelay * 1s);
+      ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
+      $display("CTR: %0d", ctrIn);
+    end
+    $display();
+    $display("----------------------------");
+    $display("Total Errors: %0d", numStErrCount+nextErrCount+outErrCount);
+    $display("# times incorrect number of states was detected: %0d", numStErrCount);
+    $display("# times next state was incorrect: %0d", nextErrCount);
+    $display("# times output was incorrect: %0d", outErrCount);
+    $finish;
+  end
+
+  always @(posedge clk) begin
+    //change state and generate output if ctr is enabled (ctrIn HIGH)
+    if (ctrIn == 1) begin
+      if (fsmType == 0) begin //moore machine
+        transitions[curState][swIn].print();
+        curState = transitions[curState][swIn].nextState;
+        transitions[curState][0].print();
+        curOut = transitions[curState][0].out;
+      end else if (fsmType == 1) begin //mealy machine
+        curOut = transitions[curState][swIn].out;
+        curState = transitions[curState][swIn].nextState;
+      end
+    end
+
+    #10ns;
+    $display("\n\nexpected state = %0d, output = %0d", curState, curOut);
+    $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
+    if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
+      $display("  ###############  ");
+      if (curState != DUTcurState) begin
+        if (DUTcurState > numStates-1) begin
+          numStErrCount++;
+          $display("ERROR--incorrect number of states");
+          $display(" max state: %0d", numStates-1);
+          $display(" DUT state: %0d", DUTcurState);
+          $display();
+          $display("----------------------------");
+          $display("Total Errors: %0d", numStErrCount+nextErrCount+outErrCount);
+          $display("# times incorrect number of states was detected: %0d", numStErrCount);
+          $display("# times next state was incorrect: %0d", nextErrCount);
+          $display("# times output was incorrect: %0d", outErrCount);
+          $finish;
+        end else begin
+          nextErrCount++;
+          $display("ERROR--incorrect next state");
+          $display(" expected : %0d", curState);
+          $display(" DUT state: %0d", DUTcurState);
+          curState = DUTcurState;
+        end
+      end
+      if (curOut != DUTout) begin
+        outErrCount++;
+        $display("ERROR--incorrect output");
+        $display(" expected  : %0d", curOut);
+        $display(" DUT output: %0d", DUTout);
+      end
+    end
   end
 endmodule

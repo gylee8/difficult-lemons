@@ -40,7 +40,7 @@ module moore2(
     case(state)
       0: begin
         if(sw_in > 0) begin
-          next = 1;
+          next = 1;   // ERROR: should be 1
           out_int = 0;
         end
         else begin
