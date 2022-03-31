@@ -32,6 +32,7 @@ void readTable(char *type, char *states, char *table){
   int num = 0;
   fscanf(file, "%d", type);   // Value: {0, 1}
   fscanf(file, "%d", states); // Value: {2, 3, 4}
+  printf("inside parseFSM: type = %d, # states = %d\n", *type, *states);
 
   char c;
   int i = 0;
