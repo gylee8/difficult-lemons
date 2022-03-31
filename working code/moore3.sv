@@ -1,11 +1,10 @@
-// 2-state Moore machine
+// 3-state Moore machine
 // Config:
 // 0
-// 2
-// 0 0 1 1 1 1
-// 1 1 0 1 0 0
-
-// ERROR: wrong (flipped) output
+// 3
+// 1 1 1 1 0
+// 1 0 2 2 0
+// 2 0 2 0 1
 
 module moore2(
   input wire clk, reset,
@@ -20,9 +19,9 @@ module moore2(
   reg out_int;
 
   initial begin
-    #5    // need this delay for state initialization to happen correctly
-    //$display("initial begin: state <= state_in");
-    state = state_in;
+    #5
+    $display("initial begin: state <= state_in");
+    state <= state_in;
   end
 
   always @(posedge clk) begin
@@ -41,19 +40,28 @@ module moore2(
     next = state;
     case(state)
       0: begin
-        if(sw_in > 0) begin
-          next = 1;
-          out_int = 1;
-        end
-        else begin
-          next = 0;
-          out_int = 0;
-        end
+        next = 1;
+        out_int = 0;
       end
 
       1: begin
-        if(sw_in == 0 || sw_in == 2) begin
+        if(sw_in == 0) begin
           next = 1;
+          out_int = 0;
+        end
+        else if(sw_in == 1) begin
+          next = 0;
+          out_int = 0;
+        end
+        else begin
+          next = 2;
+          out_int = 1;
+        end
+      end
+
+      2: begin
+        if(sw_in == 0 || sw_in == 2) begin
+          next = 2;
           out_int = 1;
         end
         else begin

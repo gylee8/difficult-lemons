@@ -5,8 +5,6 @@
 // 0 0 1 1 1 1
 // 1 1 0 1 0 0
 
-// ERROR: wrong (flipped) output
-
 module moore2(
   input wire clk, reset,
   input wire [1:0] sw_in,
