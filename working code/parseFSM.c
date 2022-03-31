@@ -8,19 +8,19 @@ int numLines(FILE *f);
 // Read information from config.txt
 void readTable(char *type, char *states, char *table);
 
-/*
-int main(){
-  char *table = (char *) malloc(sizeof(char) * 4);
-  char *type = (char *) malloc(sizeof(char));
-  char *states = (char *) malloc(sizeof(char));
-  readTable(type, states, table);
-  printf("type: %d, states: %d\n", *type, *states);
-  int i = 0;
-  // printf("table: ");
-  for(i = 0; i<4; i++){
-    printf("table element %d in %p: %d\n", i, table + i*sizeof(char), *(table + i*sizeof(char)));
-  }
-}*/
+
+// int main(){
+//   char *table = (char *) malloc(sizeof(char) * 4);
+//   char *type = (char *) malloc(sizeof(char));
+//   char *states = (char *) malloc(sizeof(char));
+//   readTable(type, states, table);
+//   printf("type: %d, states: %d\n", *type, *states);
+//   int i = 0;
+//   // printf("table: ");
+//   for(i = 0; i<4; i++){
+//     printf("table element %d in %p: %d\n", i, table + i*sizeof(char), *(table + i*sizeof(char)));
+//   }
+// }
 
 void readTable(char *type, char *states, char *table){
   printf("inside readTable()");
@@ -32,7 +32,7 @@ void readTable(char *type, char *states, char *table){
   int num = 0;
   fscanf(file, "%d", type);   // Value: {0, 1}
   fscanf(file, "%d", states); // Value: {2, 3, 4}
-  printf("inside parseFSM: type = %d, # states = %d\n", *type, *states);
+  // printf("inside parseFSM: type = %d, # states = %d\n", *type, *states);
 
   char c;
   int i = 0;
