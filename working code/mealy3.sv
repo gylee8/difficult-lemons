@@ -1,11 +1,12 @@
 // 2-state Mealy machine
 // Config:
 // 1
-// 2
-// 0 0 1 0 0 1 1 1 1
-// 1 0 0 1 1 1 1 1 0
+// 3
+// 0 1 1 2 0 1 1 0 0
+// 1 2 1 2 1 2 1 0 1
+// 2 0 1 0 1 2 0 0 0
 
-module mealy2(
+module mealy3(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
@@ -16,13 +17,6 @@ module mealy2(
 
   reg [2:0] next;
   reg out_int;
-
-  // initial begin
-  //   #5    // need this delay for state initialization to happen correctly
-  //   //$display("initial begin: state <= state_in");
-  //   state = state_in;
-  //   $display("mealy2.sv: state = %0d", state);
-  // end
 
   always @(posedge clk or reset) begin
     // $display("posedge clk");
@@ -42,11 +36,11 @@ module mealy2(
       0: begin
         case(sw_in)
           0: begin
-            next = 0;
+            next = 1;
             out_int = 1;
           end
           1: begin
-            next = 0;
+            next = 2;
             out_int = 0;
           end
           2: begin
@@ -54,30 +48,52 @@ module mealy2(
             out_int = 1;
           end
           3: begin
-            next = 1;
-            out_int = 1;
+            next = 0;
+            out_int = 0;
           end
         endcase
       end
+
       1: begin
         case(sw_in)
           0: begin
-            next = 0;
-            out_int = 0;
+            next = 2;
+            out_int = 1;
           end
           1: begin
-            next = 1;
+            next = 2;
             out_int = 1;
           end
           2: begin
-            next = 1;
+            next = 2;
             out_int = 1;
           end
           3: begin
-            next = 1;
+            next = 0;
             out_int = 0;
           end
         endcase
+
+        2: begin
+          case(sw_in)
+            0: begin
+              next = 0;
+              out_int = 1;
+            end
+            1: begin
+              next = 0;
+              out_int = 1;
+            end
+            2: begin
+              next = 2;
+              out_int = 0;
+            end
+            3: begin
+              next = 0;
+              out_int = 0;
+            end
+          endcase
+        end
       end
     endcase
   end
