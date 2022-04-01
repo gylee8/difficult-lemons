@@ -17,16 +17,8 @@ module moore2(
   reg [2:0] next;
   reg out_int;
 
-  // initial begin
-  //   #5
-  //   $display("initial begin: state <= state_in");
-  //   state <= state_in;
-  // end
-
   always @(posedge clk or posedge reset) begin
-    // $display("posedge clk");
     if(reset) begin
-      // $display("reset");
       state <= state_in;
     end
     else if (ctrl_in) begin
@@ -40,7 +32,7 @@ module moore2(
     case(state)
       0: begin
         if(sw_in > 0) begin
-          next = 1;   // ERROR: should be 1
+          next = 1;
           out_int = 0;
         end
         else begin

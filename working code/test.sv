@@ -60,7 +60,7 @@ module test();
   int outErrCount; //number of output errors
   int nextErrCount; //number of incorrect next states
   int numStErrCount; //number of times the incorrect number of states was detected
-  byte numStates, curState;
+  byte numStates, curState, prevState;
   logic curOut;
   byte fsmType; //0 = mealy, 1 = moore
   byte arr [44:0]; //stores raw state transition table
@@ -106,15 +106,15 @@ module test();
 //    arr = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
     //arr = {0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //mealy2 array
     delays = new();
-    $display("-----Inside test.sv-----");
-    $display("finished readTable");
-    $display("fsmType: %0d", fsmType);
-    $display("numStates: %0d", numStates);
-    $display("arr: %p", arr);
-    $display("arr:");
-    for (i = 0; i<45; i++) begin
-      $display("i=%0d: %0d", i, arr[i]);
-    end
+    // $display("-----Inside test.sv-----");
+    // $display("finished readTable");
+    // $display("fsmType: %0d", fsmType);
+    // $display("numStates: %0d", numStates);
+    // $display("arr: %p", arr);
+    // $display("arr:");
+    // for (i = 0; i<45; i++) begin
+    //   $display("i=%0d: %0d", i, arr[i]);
+    // end
     //$display();
     //foreach(transitions[i]) //set size of each dynamic array
       //transitions[i] = new[numStates];
@@ -128,26 +128,26 @@ module test();
         transitions[i][0] = new(); //corresponding to input=0
         transitions[i][0].nextState = (arr[$size(arr)-1-(9*i+1)]);
         transitions[i][0].out = (arr[$size(arr)-1-(9*i+2)]);
-        $display("(%0d,%0d)", transitions[i][0].nextState, transitions[i][0].out);
+        // $display("(%0d,%0d)", transitions[i][0].nextState, transitions[i][0].out);
 
         transitions[i][1] = new(); //corresponding to input=1
         transitions[i][1].nextState = (arr[$size(arr)-1-(9*i+3)]);
         transitions[i][1].out = (arr[$size(arr)-1-(9*i+4)]);
-        $display("(%0d,%0d)", transitions[i][1].nextState, transitions[i][1].out);
+        // $display("(%0d,%0d)", transitions[i][1].nextState, transitions[i][1].out);
 
         transitions[i][2] = new();
         transitions[i][2].nextState = (arr[$size(arr)-1-(9*i+5)]);
         transitions[i][2].out = (arr[$size(arr)-1-(9*i+6)]);
-        $display("(%0d,%0d)", transitions[i][2].nextState, transitions[i][2].out);
+        // $display("(%0d,%0d)", transitions[i][2].nextState, transitions[i][2].out);
 
         transitions[i][3] = new();
         transitions[i][3].nextState = (arr[$size(arr)-1-(9*i+7)]);
         transitions[i][3].out = (arr[$size(arr)-1-(9*i+8)]);
-        $display("(%0d,%0d)", transitions[i][3].nextState, transitions[i][3].out);
-        $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
+        // $display("(%0d,%0d)", transitions[i][3].nextState, transitions[i][3].out);
+        // $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
     end else if (fsmType == 0) begin //parse transitions for moore machine
-      $display("parsing transitions for Moore machine");
+      $display("Parsing transitions for Moore machine");
       for (i=0; i<numStates; i++) begin
         //$display("~~ i = %0d ~~", i);
         transitions[i][0] = new(); //corresponding to input=0
@@ -181,13 +181,13 @@ module test();
         transitions[i][3].out = (arr[$size(arr)-1-(6*i+5)]);
         //$display("expect (%0d,%0d)",(arr[$size(arr)-1-(6*i+4)]),(arr[$size(arr)-1-(6*i+5)]));
         //$display("actual (%0d,%0d)", transitions[i][3].nextState, transitions[i][3].out);
-        $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
+        // $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
     end
     $display();
 
     startState = $urandom_range(numStates-1); //generate random starting state
-    $display("startState: %0d", startState);
+    // $display("startState: %0d", startState);
     curState = startState;
 
     reset = 1;
@@ -195,30 +195,31 @@ module test();
 
     inputArr = new();
     `SV_RAND_CHECK(inputArr.randomize()); //randomize SW_input and CTR_input
-    $display("randomized sw and ctr inputs");
-    inputArr.print();
+    $display("Randomized sw and ctr inputs");
+    // inputArr.print();
     $display();
+    $display("Starting tests");
     $display("----------------------------");
-    $display("Starting");
-    $display("state: %0d", curState);
+    $display("Errors: \n");
+    // $display("state: %0d", curState);
 
 
     //$finish;
 
     foreach(inputArr.SWInputArr[i]) begin
       `SV_RAND_CHECK(delays.randomize());
-      $display();
+      // $display();
       //std::randomize(inputDelay) with {inputDelay > 4; inputDelay < 11;};
-      $display("#%0d", delays.swDelay);
+      // $display("#%0d", delays.swDelay);
       #(delays.swDelay * 1s);
       swIn = inputArr.SWInputArr[i];
-      $display("SW: %0d", swIn);
+      // $display("SW: %0d", swIn);
 
       //std::randomize(ctrDelay) with {ctrDelay > 4; ctrDelay < 11; ctrDelay>=inputDelay;};
-      $display("#%0d", delays.ctrDelay);
+      // $display("#%0d", delays.ctrDelay);
       #(delays.ctrDelay * 1s);
       ctrIn = inputArr.CtrInputArr[i]; //input accepted when ctr_input is HIGH
-      $display("CTR: %0d", ctrIn);
+      // $display("CTR: %0d", ctrIn);
     end
     $display();
     $display("----------------------------");
@@ -232,20 +233,21 @@ module test();
   always @(posedge clk) begin
     //change state and generate output if ctr is enabled (ctrIn HIGH)
     if (ctrIn == 1) begin
+      prevState = curState;
       if (fsmType == 0) begin //moore machine
-        transitions[curState][swIn].print();
+        // transitions[curState][swIn].print();
         curState = transitions[curState][swIn].nextState;
-        transitions[curState][0].print();
-        curOut = transitions[curState][0].out;
+        // transitions[curState][0].print();
+        // curOut = transitions[curState][0].out;
       end else if (fsmType == 1) begin //mealy machine
         curOut = transitions[curState][swIn].out;
-        curState = transitions[curState][swIn].nextState;
+        // curState = transitions[curState][swIn].nextState;
       end
     end
-
+//
     #10ns;
-    $display("\n\nexpected state = %0d, output = %0d", curState, curOut);
-    $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
+    // $display("\n\nexpected state = %0d, output = %0d", curState, curOut);
+    // $display("DUT      state = %0d, output = %0d", DUTcurState, DUTout);
     if (curState != DUTcurState || curOut != DUTout) begin //compare to DUT
       $display("  ###############  ");
       if (curState != DUTcurState) begin
@@ -264,15 +266,17 @@ module test();
         end else begin
           nextErrCount++;
           $display("ERROR--incorrect next state");
-          $display(" expected : %0d", curState);
-          $display(" DUT state: %0d", DUTcurState);
+          $display(" Transition: at state = %0d, input = %0d", prevState, swIn);
+          $display(" Expected  : %0d", curState);
+          $display(" DUT state : %0d", DUTcurState);
           curState = DUTcurState;
         end
       end
       if (curOut != DUTout) begin
         outErrCount++;
         $display("ERROR--incorrect output");
-        $display(" expected  : %0d", curOut);
+        $display(" Transition: at state = %0d, input = %0d", prevState, swIn);
+        $display(" Expected  : %0d", curOut);
         $display(" DUT output: %0d", DUTout);
       end
     end

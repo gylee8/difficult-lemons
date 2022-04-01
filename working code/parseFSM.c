@@ -23,7 +23,7 @@ void readTable(char *type, char *states, char *table);
 // }
 
 void readTable(char *type, char *states, char *table){
-  printf("\ninside readTable()\n");
+  // printf("\ninside readTable()\n");
   FILE *file;
   file = fopen("config.txt", "r");
 
@@ -48,7 +48,7 @@ void readTable(char *type, char *states, char *table){
   // printf("temp = %d\n", temp);
   *type = temp;
   // printf("type = %d\n", *type);
-  printf("\ninside parseFSM: type = %d, # states = %d\n", *type, *states);
+  // printf("\ninside parseFSM: type = %d, # states = %d\n", *type, *states);
 
   char c;
   int i = 0;
