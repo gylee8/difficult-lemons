@@ -6,7 +6,7 @@
 // 1 0 2 2 0
 // 2 0 2 0 1
 
-module moore2(
+module moore3(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
