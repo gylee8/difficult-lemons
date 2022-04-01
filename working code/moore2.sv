@@ -23,7 +23,7 @@ module moore2(
   //   state <= state_in;
   // end
 
-  always @(posedge clk or reset) begin
+  always @(posedge clk or posedge reset) begin
     // $display("posedge clk");
     if(reset) begin
       // $display("reset");
