@@ -73,27 +73,27 @@ module mealy3(
             out_int = 0;
           end
         endcase
+      end
 
-        2: begin
-          case(sw_in)
-            0: begin
-              next = 0;
-              out_int = 1;
-            end
-            1: begin
-              next = 0;
-              out_int = 1;
-            end
-            2: begin
-              next = 2;
-              out_int = 0;
-            end
-            3: begin
-              next = 0;
-              out_int = 0;
-            end
-          endcase
-        end
+      2: begin
+        case(sw_in)
+          0: begin
+            next = 0;
+            out_int = 1;
+          end
+          1: begin
+            next = 0;
+            out_int = 1;
+          end
+          2: begin
+            next = 2;
+            out_int = 0;
+          end
+          3: begin
+            next = 0;
+            out_int = 0;
+          end
+        endcase
       end
     endcase
   end
