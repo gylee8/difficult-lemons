@@ -1,12 +1,13 @@
-// 3-state Mealy machine
+// 4-state Mealy machine
 // Config:
 // 1
-// 3
-// 0 1 1 2 0 1 1 0 0
-// 1 2 1 2 1 2 1 0 1
-// 2 0 1 0 1 2 0 0 0
+// 4
+// 0 0 1 2 0 1 0 2 0
+// 1 1 1 0 1 2 0 2 0
+// 2 1 1 3 1 3 1 3 0
+// 3 1 1 0 0 0 1 2 1
 
-module mealy3(
+module mealy4(
   input wire clk, reset,
   input wire [1:0] sw_in,
   input wire ctrl_in,
@@ -34,7 +35,7 @@ module mealy3(
       0: begin
         case(sw_in)
           0: begin
-            next = 1;
+            next = 0;
             out_int = 1;
           end
           1: begin
@@ -43,10 +44,10 @@ module mealy3(
           end
           2: begin
             next = 1;
-            out_int = 1;
+            out_int = 0;
           end
           3: begin
-            next = 2;       // ERROR: should be 0
+            next = 2;
             out_int = 0;
           end
         endcase
@@ -55,20 +56,20 @@ module mealy3(
       1: begin
         case(sw_in)
           0: begin
-            next = 3;     // ERROR: should be 2
+            next = 1;
             out_int = 1;
           end
           1: begin
-            next = 2;
+            next = 0;
             out_int = 1;
           end
           2: begin
-            next = 1;      // ERROR: should be 2
-            out_int = 0;   // ERROR: should be 1
+            next = 2;
+            out_int = 0;
           end
           3: begin
-            next = 0;
-            out_int = 1;
+            next = 2;
+            out_int = 0;
           end
         endcase
       end
@@ -76,20 +77,41 @@ module mealy3(
       2: begin
         case(sw_in)
           0: begin
-            next = 0;
+            next = 1;
             out_int = 1;
           end
           1: begin
-            next = 2;        // ERROR: should be 0
-            out_int = 0;     // ERROR: should be 1
+            next = 3;
+            out_int = 1;
           end
           2: begin
-            next = 0;         // ERROR: should be 2
-            out_int = 1;      // ERROR: should be 0
+            next = 3;
+            out_int = 1;
           end
           3: begin
+            next = 3;
+            out_int = 0;
+          end
+        endcase
+      end
+
+      3: begin
+        case(sw_in)
+          0: begin
+            next = 1;
+            out_int = 1;
+          end
+          1: begin
             next = 0;
             out_int = 0;
+          end
+          2: begin
+            next = 0;
+            out_int = 1;
+          end
+          3: begin
+            next = 2;
+            out_int = 1;
           end
         endcase
       end

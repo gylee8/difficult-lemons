@@ -82,8 +82,12 @@ module test();
   import "DPI-C" function void readTable(output byte fsmType, output byte numStates, output byte arr[45]);
 
   //declare DUT
-  moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // moore3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // moore4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  mealy4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
     clk = 0;
@@ -116,14 +120,14 @@ module test();
     //   $display("i=%0d: %0d", i, arr[i]);
     // end
     //$display();
-    //foreach(transitions[i]) //set size of each dynamic array
-      //transitions[i] = new[numStates];
+    // foreach(transitions[i]) //set size of each dynamic array
+    //   transitions[i] = new[numStates];
     transitions = new[numStates];
     foreach(transitions[i]) begin
       transitions[i] = new[4];
     end
     if (fsmType == 1) begin //parse transitions for mealy machine
-      $display("parsing transitions for Mealy machine");
+      $display("parsing transitions for %0d state Mealy machine", numStates);
       for (i=0; i<numStates; i++) begin
         transitions[i][0] = new(); //corresponding to input=0
         transitions[i][0].nextState = (arr[$size(arr)-1-(9*i+1)]);
@@ -147,7 +151,7 @@ module test();
         // $display("transitions[%0d]: (%0d,%0d), (%0d,%0d), (%0d,%0d), (%0d,%0d)", i, transitions[i][0].nextState, transitions[i][0].out, transitions[i][1].nextState, transitions[i][1].out, transitions[i][2].nextState, transitions[i][2].out, transitions[i][3].nextState, transitions[i][3].out);
       end
     end else if (fsmType == 0) begin //parse transitions for moore machine
-      $display("Parsing transitions for Moore machine");
+      $display("Parsing transitions for %0d state Moore machine", numStates);
       for (i=0; i<numStates; i++) begin
         //$display("~~ i = %0d ~~", i);
         transitions[i][0] = new(); //corresponding to input=0
@@ -238,10 +242,10 @@ module test();
         // transitions[curState][swIn].print();
         curState = transitions[curState][swIn].nextState;
         // transitions[curState][0].print();
-        // curOut = transitions[curState][0].out;
+        curOut = transitions[curState][0].out;
       end else if (fsmType == 1) begin //mealy machine
         curOut = transitions[curState][swIn].out;
-        // curState = transitions[curState][swIn].nextState;
+        curState = transitions[curState][swIn].nextState;
       end
     end
 //
