@@ -1,0 +1,164 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sat Apr  2 01:29:42 2022
+# Process ID: 10476
+# Current directory: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code
+# Command line: xsim.exe -mode tcl -source {xsim.dir/work.test/xsim_script.tcl}
+# Log file: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/xsim.log
+# Journal file: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/work.test/xsim_script.tcl
+# xsim {work.test} -autoloadwcfg -runall
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+run -all
+Parsing transitions for 5 state Moore machine
+
+Randomized sw and ctr inputs
+
+Starting tests
+----------------------------
+Errors: 
+
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 2, input = 2
+ Expected  : 3
+ DUT state : 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+
+----------------------------
+Total Errors: 28
+# times incorrect number of states was detected: 0
+# times next state was incorrect: 10
+# times output was incorrect: 18
+$finish called at time : 429 s : File "C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv" Line 236
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Apr  2 01:29:45 2022...

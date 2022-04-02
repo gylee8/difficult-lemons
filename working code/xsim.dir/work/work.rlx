@@ -1,0 +1,12 @@
+0.6
+2019.2
+Nov  6 2019
+21:57:16
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/mealy2.sv,1648861654,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_mealy2_sv;mealy2,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/mealy4.sv,1648873173,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_mealy4_sv;mealy4,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/mealy5.sv,1648878688,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_mealy5_sv;mealy5,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/moore2.sv,1648837146,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_moore2_sv;moore2,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/moore3.sv,1648864302,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_moore3_sv;moore3,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/moore4.sv,1648869675,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_moore4_sv;moore4,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/moore5.sv,1648875540,systemVerilog,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,,$unit_moore5_sv;moore5,,,,,,,,
+C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv,1648878103,systemVerilog,,,,test,,,,,,,,

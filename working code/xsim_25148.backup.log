@@ -1,0 +1,440 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:40:23 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sat Apr  2 01:15:15 2022
+# Process ID: 25148
+# Current directory: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code
+# Command line: xsim.exe -mode tcl -source {xsim.dir/work.test/xsim_script.tcl}
+# Log file: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/xsim.log
+# Journal file: C:/Users/caitl/Documents/GitHub/difficult-lemons/working code\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/work.test/xsim_script.tcl
+# xsim {work.test} -autoloadwcfg -runall
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+run -all
+-----Inside test.sv-----
+finished readTable
+fsmType: 0
+numStates: 5
+arr: '{0,1,0,3,4,1,1,3,0,0,4,0,2,2,2,3,1,1,3,4,2,1,4,0,4,2,3,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+arr:
+i=0: 0
+i=1: 0
+i=2: 0
+i=3: 0
+i=4: 0
+i=5: 0
+i=6: 0
+i=7: 0
+i=8: 0
+i=9: 0
+i=10: 0
+i=11: 0
+i=12: 0
+i=13: 0
+i=14: 0
+i=15: 1
+i=16: 0
+i=17: 0
+i=18: 3
+i=19: 2
+i=20: 4
+i=21: 0
+i=22: 4
+i=23: 1
+i=24: 2
+i=25: 4
+i=26: 3
+i=27: 1
+i=28: 1
+i=29: 3
+i=30: 2
+i=31: 2
+i=32: 2
+i=33: 0
+i=34: 4
+i=35: 0
+i=36: 0
+i=37: 3
+i=38: 1
+i=39: 1
+i=40: 4
+i=41: 3
+i=42: 0
+i=43: 1
+i=44: 0
+Parsing transitions for 5 state Moore machine
+transitions[0]: (1,1), (0,1), (3,1), (4,1)
+transitions[1]: (3,0), (0,0), (0,0), (4,0)
+transitions[2]: (2,1), (2,1), (3,1), (1,1)
+transitions[3]: (4,0), (2,0), (1,0), (4,0)
+transitions[4]: (2,1), (3,1), (0,1), (0,1)
+
+Randomized sw and ctr inputs
+
+Starting tests
+----------------------------
+Errors: 
+
+next state: transitions[2][3].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][1].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][1].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][1].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][0].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][0].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][0].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][0].nextState = 2
+output: transitions[2][0].out = 1
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 1
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 1
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 1
+ Expected  : 1
+ DUT output: 0
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 1
+ Expected  : 1
+ DUT output: 0
+next state: transitions[2][1].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][1].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][2].nextState = 3
+output: transitions[3][0].out = 0
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 2, input = 2
+ Expected  : 3
+ DUT state : 0
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][0].nextState = 2
+output: transitions[2][0].out = 1
+  ###############  
+ERROR--incorrect output
+ Transition: at state = 4, input = 0
+ Expected  : 1
+ DUT output: 0
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][0].nextState = 2
+output: transitions[2][0].out = 1
+next state: transitions[2][3].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][3].nextState = 4
+output: transitions[4][0].out = 1
+next state: transitions[4][3].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+next state: transitions[0][2].nextState = 3
+output: transitions[3][0].out = 0
+next state: transitions[3][2].nextState = 1
+output: transitions[1][0].out = 0
+next state: transitions[1][2].nextState = 0
+output: transitions[0][0].out = 1
+  ###############  
+ERROR--incorrect next state
+ Transition: at state = 1, input = 2
+ Expected  : 0
+ DUT state : 4
+ERROR--incorrect output
+ Transition: at state = 1, input = 2
+ Expected  : 1
+ DUT output: 0
+next state: transitions[4][2].nextState = 0
+output: transitions[0][0].out = 1
+
+----------------------------
+Total Errors: 28
+# times incorrect number of states was detected: 0
+# times next state was incorrect: 10
+# times output was incorrect: 18
+$finish called at time : 429 s : File "C:/Users/caitl/Documents/GitHub/difficult-lemons/working code/test.sv" Line 235
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Apr  2 01:15:18 2022...
