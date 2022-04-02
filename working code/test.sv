@@ -61,6 +61,7 @@ module test();
   int nextErrCount; //number of incorrect next states
   int numStErrCount; //number of times the incorrect number of states was detected
   byte numStates, curState, prevState;
+  bit [1:0] swCur;
   logic curOut;
   byte fsmType; //0 = mealy, 1 = moore
   byte arr [44:0]; //stores raw state transition table
@@ -87,7 +88,9 @@ module test();
   // moore3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  mealy4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // mealy4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // moore5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  mealy5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
     clk = 0;
@@ -238,10 +241,13 @@ module test();
     //change state and generate output if ctr is enabled (ctrIn HIGH)
     if (ctrIn == 1) begin
       prevState = curState;
+      swCur = swIn;
       if (fsmType == 0) begin //moore machine
         // transitions[curState][swIn].print();
+        // $display("next state: transitions[%0d][%0d].nextState = %0d", curState, swIn, transitions[curState][swIn].nextState);
         curState = transitions[curState][swIn].nextState;
         // transitions[curState][0].print();
+        // $display("output: transitions[%0d][0].out = %0d", curState, transitions[curState][0].out);
         curOut = transitions[curState][0].out;
       end else if (fsmType == 1) begin //mealy machine
         curOut = transitions[curState][swIn].out;
@@ -258,6 +264,7 @@ module test();
         if (DUTcurState > numStates-1) begin
           numStErrCount++;
           $display("ERROR--incorrect number of states");
+          $display(" Transition: at state = %0d, input = %0d", prevState, swCur);
           $display(" max state: %0d", numStates-1);
           $display(" DUT state: %0d", DUTcurState);
           $display();
@@ -270,7 +277,7 @@ module test();
         end else begin
           nextErrCount++;
           $display("ERROR--incorrect next state");
-          $display(" Transition: at state = %0d, input = %0d", prevState, swIn);
+          $display(" Transition: at state = %0d, input = %0d", prevState, swCur);
           $display(" Expected  : %0d", curState);
           $display(" DUT state : %0d", DUTcurState);
           curState = DUTcurState;
@@ -279,7 +286,7 @@ module test();
       if (curOut != DUTout) begin
         outErrCount++;
         $display("ERROR--incorrect output");
-        $display(" Transition: at state = %0d, input = %0d", prevState, swIn);
+        $display(" Transition: at state = %0d, input = %0d", prevState, swCur);
         $display(" Expected  : %0d", curOut);
         $display(" DUT output: %0d", DUTout);
       end
