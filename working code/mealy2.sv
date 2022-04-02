@@ -17,17 +17,8 @@ module mealy2(
   reg [2:0] next;
   reg out_int;
 
-  // initial begin
-  //   #5    // need this delay for state initialization to happen correctly
-  //   //$display("initial begin: state <= state_in");
-  //   state = state_in;
-  //   $display("mealy2.sv: state = %0d", state);
-  // end
-
   always @(posedge clk or posedge reset) begin
-    // $display("posedge clk");
     if(reset) begin
-      // $display("reset");
       state <= state_in;
     end
     else if (ctrl_in) begin
@@ -50,7 +41,7 @@ module mealy2(
             out_int = 0;
           end
           2: begin
-            next = 1;
+            next = 0;     // ERROR: should be 1
             out_int = 1;
           end
           3: begin
@@ -63,7 +54,7 @@ module mealy2(
         case(sw_in)
           0: begin
             next = 0;
-            out_int = 0;
+            out_int = 1;    // ERROR: should be 0
           end
           1: begin
             next = 1;

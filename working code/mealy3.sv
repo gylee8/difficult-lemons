@@ -19,9 +19,7 @@ module mealy3(
   reg out_int;
 
   always @(posedge clk or posedge reset) begin
-    // $display("posedge clk");
     if(reset) begin
-      // $display("reset");
       state <= state_in;
     end
     else if (ctrl_in) begin

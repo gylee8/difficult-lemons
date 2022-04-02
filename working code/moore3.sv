@@ -2,9 +2,9 @@
 // Config:
 // 0
 // 3
-// 1 1 1 1 0
-// 1 0 2 2 0
-// 2 0 2 0 1
+// 0 1 1 1 1 0
+// 1 1 0 2 2 0
+// 2 2 0 2 0 1
 
 module moore3(
   input wire clk, reset,
@@ -18,16 +18,8 @@ module moore3(
   reg [2:0] next;
   reg out_int;
 
-  // initial begin
-  //   #5
-  //   $display("initial begin: state <= state_in");
-  //   state <= state_in;
-  // end
-
   always @(posedge clk or posedge reset) begin
-    // $display("posedge clk");
     if(reset) begin
-      // $display("reset");
       state <= state_in;
     end
     else if (ctrl_in) begin
@@ -41,16 +33,16 @@ module moore3(
     case(state)
       0: begin
         next = 1;
-        out_int = 0;
+        out_int = 1;    // ERROR: should be 0
       end
 
       1: begin
         if(sw_in == 0) begin
           next = 1;
-          out_int = 0;
+          out_int = 1;    // ERROR: should be 0
         end
         else if(sw_in == 1) begin
-          next = 0;
+          next = 3;   // ERROR: should be 0
           out_int = 0;
         end
         else begin
@@ -61,7 +53,7 @@ module moore3(
 
       2: begin
         if(sw_in == 0 || sw_in == 2) begin
-          next = 2;
+          next = 0;     // ERROR: should be 2
           out_int = 1;
         end
         else begin
