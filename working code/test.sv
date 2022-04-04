@@ -86,11 +86,11 @@ module test();
   // moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  // mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  mealy5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // mealy5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
     clk = 0;
