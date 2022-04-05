@@ -57,9 +57,13 @@ module moore5(
           next = 3;
           out_int = 0;
         end
-        else if(sw_in == 1 || sw_in == 2) begin
+        else if(sw_in == 1) begin
           next = 4;         // ERROR: should be 0
           out_int = 0;      // ERROR: should be 1
+        end
+        else if(sw_in == 2) begin
+          next = 4;         // ERROR: should be 0 (error says 4)
+          out_int = 0;      // ERROR: should be 1 (error says 0)
         end
         else begin
           next = 4;
@@ -73,7 +77,7 @@ module moore5(
           out_int = 1;
         end
         else if(sw_in == 2) begin
-          next = 0;       // ERROR: should be 3
+          next = 0;       // ERROR: should be 3 (error says 0)
           out_int = 0;
         end
         else begin
@@ -100,7 +104,7 @@ module moore5(
       4: begin
         if(sw_in == 0) begin
           next = 2;
-          out_int = 0;    // ERROR: should be 1
+          out_int = 0;    // ERROR: should be 1 (error says 0)
         end
         else if(sw_in == 1) begin
           next = 3;

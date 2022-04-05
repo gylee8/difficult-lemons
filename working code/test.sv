@@ -15,7 +15,7 @@ class randInputs;
   rand byte SWInputArr[];
   rand byte CtrInputArr[];
 
-  constraint c_sizeSW{SWInputArr.size() inside {[20:30]};}
+  constraint c_sizeSW{SWInputArr.size() inside {[150:200]};}
   constraint c_dataSW{foreach(SWInputArr[i])
                         SWInputArr[i] inside {[0:3]};}
   constraint c_sizeCtr{CtrInputArr.size() == SWInputArr.size();}
@@ -86,10 +86,10 @@ module test();
   // moore2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy2 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  // mealy3 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // moore4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy4 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
-  // moore5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
+  moore5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
   // mealy5 FSM(clk, reset, swIn, ctrIn, startState, DUTcurState, DUTout);
 
   initial begin
@@ -194,6 +194,7 @@ module test();
     $display();
 
     startState = $urandom_range(numStates-1); //generate random starting state
+    // startState = 1;
     // $display("startState: %0d", startState);
     curState = startState;
 
